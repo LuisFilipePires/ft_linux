@@ -113,15 +113,6 @@ It is used to avoid hardcoding paths and to clearly separate the host system fro
 
 $LFS points to /mnt/lfs
 
-
---- 
-# Check
-
-• You must use at least 3 different partitions: root, /boot and a swap partition. You
-can, of course, make more partitions if you want to. -> OK
-
----
-
 - ## LFS user setup
 
 sudo groupadd lfs
