@@ -110,6 +110,7 @@ $LFS defines the root directory of the Linux From Scratch system.
 It is used to avoid hardcoding paths and to clearly separate the host system from the LFS build environment.
 
 /dev/vdb3 is mounted at /mnt/lfs
+
 $LFS points to /mnt/lfs
 
 
@@ -122,17 +123,22 @@ can, of course, make more partitions if you want to. -> OK
 ---
 
 - ## LFS user setup
+
 sudo groupadd lfs
+
 sudo useradd -s /bin/bash -g lfs -m -k /dev/null lfs
+
 sudo passwd lfs
 
 Switch to the build user:
 
 su - lfs
+
 export LFS=/mnt/lfs
 
 
 - ## Sources directory
 sudo mkdir -pv $LFS/sources
+
 sudo chmod -v a+wt $LFS/sources
 
