@@ -28,7 +28,8 @@ vda                       253:0    0    64G  0 disk
 └─vda3                    253:3    0  60.9G  0 part 
   └─ubuntu--vg-ubuntu--lv 252:0    0  60.9G  0 lvm  /
 vdb                       253:16   0    10G  0 disk 
-vdc                       253:32   0    25G  0 disk 
+vdc                       253:32   0    25G  0 disk
+```
 
 ## Installation target
 
@@ -40,7 +41,7 @@ vdc                       253:32   0    25G  0 disk
 ### 
 Before starting the installation, the target disk was prepared.
 
-```bash
+bash
 `sudo fdisk /dev/vdc`
 
 Created partitions (example structure):
@@ -50,23 +51,25 @@ Created partitions (example structure):
 
 ## 4. Filesystem creation
 
-### Formatted the main partition:
+#### Formatted the main partition:
 
-```bash
-mkfs.ext4 /dev/vdc1
+`mkfs.ext4 /dev/vdc1`
+
+---
 
 ## 5. Mount point setup
 
 ### Mount the LFS partition:
 
-```bah
+```bash
 export LFS=/mnt/lfs
 mkdir -pv $LFS
 mount /dev/vdc1 $LFS
+```
 
 ## 6. Toolchain preparation
 
-###A temporary toolchain was built inside the LFS environment to isolate the final system from the host system.
+### A temporary toolchain was built inside the LFS environment to isolate the final system from the host system.
 This includes:
 
 binutils
@@ -91,11 +94,13 @@ Final configuration
 All builds were done manually from source.
 The system was installed on /dev/vdc.
 VM was required due to ARM host limitations.
-
 ```
 ```
-
+```
+```
+## PROCESS
 ## 3
+
 ```bash 
 fill@luisx:~$ sudo fdisk /dev/vdc
 [sudo] password for fill: 
@@ -109,7 +114,7 @@ Created a new DOS (MBR) disklabel with disk identifier 0x3d43163c.
 
 Command (m for help): m
 
-`Help:
+Help:
 
   DOS (MBR)
    a   toggle a bootable flag
@@ -143,14 +148,14 @@ Command (m for help): m
    g   create a new empty GPT partition table
    G   create a new empty SGI (IRIX) partition table
    o   create a new empty MBR (DOS) partition table
-   s   create a new empty Sun partition table`
+   s   create a new empty Sun partition table
 
 
-Command (m for help): `n`
+Command (m for help): n
 Partition type
    p   primary (0 primary, 0 extended, 4 free)
    e   extended (container for logical partitions)
-Select (default p): `p`
+Select (default p): p
 Partition number (1-4, default 1): 1
 First sector (2048-52428799, default 2048): 
 
@@ -158,18 +163,19 @@ Last sector, +/-sectors or +/-size{K,M,G,T,P} (2048-52428799, default 52428799):
 
 Created a new partition 1 of type 'Linux' and of size 20 GiB.
 
-Command (m for help): `w`
+Command (m for help): w
 The partition table has been altered.
 Calling ioctl() to re-read partition table.
 Syncing disks.
-
+```
 ## 4 Formating
 `sudo mkfs.ext4 /dev/vdc1`
 
 Allocating group tables: done                            
 Writing inode tables: done                            
 Creating journal (32768 blocks): done
-Writing superblocks and filesystem accounting information: done   
+Writing superblocks and filesystem accounting information: done
+
 ---
 ## Filesystem preparation
 
@@ -183,7 +189,7 @@ export LFS=/mnt/lfs
 
 df -h | grep lfs
 ### Permissions setup
-
+```
 The default file creation mask was configured using:
 
 `umask 022`
