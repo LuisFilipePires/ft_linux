@@ -5,11 +5,9 @@ Linux From Scratch
 
 ## 1. Environment
 
-A Linux virtual machine was used as the host environment for this project.
+A Linux Debien virtual machine was used as the host environment for this project.
 
-The host system is running on a Mac M1 (ARM architecture), so a virtual machine was required to provide a compatible x86_64 Linux environment for the Linux From Scratch build process.
-
-An additional 25GB virtual disk was attached to the VM to store the LFS system.
+An additional 10GB virtual disk was attached to the VM to store the LFS system.
 
 the enunced
 - You must use at least 3 different partitions: `root, /boot and a swap` partition. You
