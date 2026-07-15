@@ -3,13 +3,23 @@ Linux From Scratch
 
 ---
 
-## 1. Environment
+## Disk Management 
 
-A Linux Debien virtual machine was used as the host environment for this project.
+A Linux Debien 40.962 GB virtual machine was used as the host environment for this project.
 
-An additional 10GB virtual disk was attached to the VM to store the LFS system.
+To store the LFS system, i split 20GB at VirtualBox, ```Debian VM → Settings → Storage → SATA Controller → Add Hard Disk (+) → Create```
 
-the enunced
+- Name: ft_linux.vdi
+- Size: 20 GB
+- Type: VDI
+- Storage: Dynamically allocated
+
+---
+
+## 1 Environment
+
+### The enunced
+
 - You must use at least 3 different partitions: `root, /boot and a swap` partition. You
 can, of course, make more partitions if you want to.
 
@@ -34,8 +44,8 @@ In the ft_linux project, the disk used to build our Linux system appears inside 
 The system uses one additional disk (/dev/vdb) with 10GB allocated and divided into 3 partitions as required by the subject:
 
 - /dev/vdb1 → 1GB → swap
-- /dev/vdb2 → 512Mb → /boot
-- /dev/vdb3 → ~8GB → root filesystem (/)
+- /dev/vdb2 → 1GB → /boot
+- /dev/vdb3 → ~18GB → root filesystem (/)
 
 This satisfies the requirement of at least 3 partitions.
 
