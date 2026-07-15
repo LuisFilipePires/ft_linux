@@ -15,13 +15,27 @@ can, of course, make more partitions if you want to.
 
 ---
 
-Disk setup
+### Disk setup
 
-The system uses one additional disk (/dev/vdb) with 25GB allocated and divided into 3 partitions as required by the subject:
+### /dev Directory
 
-/dev/vdb1 → 2GB → swap
-/dev/vdb2 → 1GB → /boot
-/dev/vdb3 → ~22GB → root filesystem (/)
+`/dev` (device) is a special directory in Linux where system devices are represented as files. 
+In Linux, hardware devices are accessed through special files called device files, allowing the operating system and applications to communicate with them.
+
+Disks, partitions, USB devices, terminals, and other hardware components are represented inside `/dev`.
+
+For example:
+- `/dev/sda` represents a disk device.
+- `/dev/sda1` represents the first partition of that disk.
+- `/dev/sdb` can represent an additional disk added to the system.
+
+In the ft_linux project, the disk used to build our Linux system appears inside `/dev` (for example `/dev/sdb`). Its partitions are created from this device (for example `/dev/sdb1`) and will be used as the destination for the new Linux system.
+
+The system uses one additional disk (/dev/vdb) with 10GB allocated and divided into 3 partitions as required by the subject:
+
+- /dev/vdb1 → 1GB → swap
+- /dev/vdb2 → 512Mb → /boot
+- /dev/vdb3 → ~8GB → root filesystem (/)
 
 This satisfies the requirement of at least 3 partitions.
 
@@ -35,7 +49,7 @@ This satisfies the requirement of at least 3 partitions.
 
 - add partition
 
-sudo fdisk /dev/vdb
+```sudo fdisk /dev/vdb```
 
 Commands:
 
@@ -48,10 +62,11 @@ w → write changes
 
 - to delete a partition
 
-sudo fdisk /dev/vdb
-p - partition
-d - delete
-w - write -> save
+```sudo fdisk /dev/vdb```
+
+- -p (partition)
+- -d (delete)
+- -w (write) -> save
 
 ---
 
@@ -130,4 +145,28 @@ export LFS=/mnt/lfs
 sudo mkdir -pv $LFS/sources
 
 sudo chmod -v a+wt $LFS/sources
+
+
+
+---
+---
+
+## Notes
+
+How to manage space in virtual machines
+
+```bash
+VBoxManage list hdds
+```
+
+Find the location of HDD to manage
+
+```Location:       /media/"USER"/SSD/ft_linux_builder_MV2/ft_linux_builder/ft_linux_builder.vdi```
+
+```VBoxManage modifymedium disk "PATH" --resize *** ```
+
+Example:
+
+``` VBoxManage modifymedium disk "/media/"USER"/SSD/ft_linux_builder_MV2/ft_linux_builder/ft_linux_builder.vdi" --resize 40960```
+
 
