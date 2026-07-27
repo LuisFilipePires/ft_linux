@@ -258,7 +258,7 @@ echo $LFS
 If no value is displayed, add it to the root user's shell configuration:
 
 ```bash
-echo 'export LFS=/mnt/lfs' >> ~/.bash_profile
+echo 'export LFS=/mnt/lfs' >> ~/.bashrc (debian) -> generic /.bash_profile
 source ~/.bash_profile
 ```
 
@@ -279,6 +279,20 @@ Exit the root shell:
 ```bash
 exit
 ```
+
+### Directory permissions
+
+The LFS book requires the sources directory to have specific permissions:
+
+```chmod a+wt $LFS/sources```
+
+Expected result:
+
+```drwxrwxrwt sources```
+
+### sticky bit
+
+The final t represents the sticky bit. It allows multiple users to work inside the directory while preventing users from deleting files owned by other users.
 
 ---
 
@@ -321,6 +335,88 @@ VBoxManage modifymedium disk "/media/<USER>/SSD/ft_linux_builder_MV2/ft_linux_bu
 <details>
 <summary>Packages to Install</summary>
 
-_Work in progress..._
+In $LFS/sources/ forder download each package
+
+Using wget https://downlod_file.tar.xz -> links in LFS book chapter 3
+
+```md5sum -c md5sums``` To confirm veracity files
+
+## Storage of Source Packages
+
+During the Linux From Scratch (LFS) build process, all required source packages and patches are stored in the directory:
+
+```bash
+$LFS/sources
+
+## Packages an patches
+
+• Acl
+• Attr
+• Autoconf
+• Automake
+• Bash
+• Bc
+• Binutils
+• Bison
+• Bzip2
+• Check
+• Coreutils
+• DejaGNU
+• Diffutils
+• Eudev
+• E2fsprogs
+• Expat
+• Expect
+• File
+• Findutils
+• Flex
+• Gawk
+• GCC
+• GDBM
+• Gettext
+• Glibc
+• GMP
+• Gperf
+• Grep
+• Groff
+• GRUB
+• Gzip
+• Iana-Etc
+• Inetutils
+• Intltool
+• IPRoute2
+• Kbd
+• Kmod
+• Less
+• Libcap
+• Libpipeline
+• Libtool
+• M4
+• Make
+• Man-DB
+• Man-pages
+• MPC
+• MPFR
+• Ncurses
+• Patch
+• Perl)
+• Pkg-config
+• Procps
+• Psmisc
+• Readline
+• Sed
+• Shadow
+• Sysklogd
+• Sysvinit
+• Tar
+• Tcl
+• Texinfo
+• Time Zone Data
+• Udev-lfs Tarball
+• Util-linux
+• Vim
+• XML::Parser
+• Xz Utils
+• Zlib
 
 </details>
