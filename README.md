@@ -429,7 +429,7 @@ $LFS/sources
 *For example, older LFS versions used Eudev, while newer LFS versions use udev-lfs, which provides the required device management functionality in a different way.*
 
 |  42 ft_linux   |   LFS 12.3   |
-|________________|______________|
+|----------------|--------------|
 | Eudev	| udev-lfs|
 | Sysvinit | SysV init |
 
