@@ -368,11 +368,6 @@ $LFS/sources
 • Eudev
 • E2fsprogs
 • Expat
-```
-During the download phase, Expat 2.6.4 was renamed by the upstream project as:
-`expat-2.6.4-RENAMED-VULNERABLE-PLEASE-USE-2.7.2-INSTEAD.tar.xz` 
-The file content was verified using the MD5 checksum provided by LFS 12.3.
-```
 • Expect
 • File
 • Findutils
@@ -437,5 +432,11 @@ The file content was verified using the MD5 checksum provided by LFS 12.3.
 |----------------|--------------|
 | Eudev	| udev-lfs|
 | Sysvinit | SysV init |
+
+```
+During the download phase, Expat 2.6.4 was renamed by the upstream project as:
+`expat-2.6.4-RENAMED-VULNERABLE-PLEASE-USE-2.7.2-INSTEAD.tar.xz` 
+The file content was verified using the MD5 checksum provided by LFS 12.3.
+```
 
 </details>
