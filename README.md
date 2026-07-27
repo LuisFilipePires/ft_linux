@@ -1,122 +1,187 @@
 # ft_linux
+
 Linux From Scratch
 
 ---
 
-## Disk Management 
+<details>
+<summary>Requirements</summary>
 
-A Linux Debien 40.962 GB virtual machine was used as the host environment for this project.
+## Host System Kernel
 
-To store the LFS system, i split 20GB at VirtualBox, ```Debian VM → Settings → Storage → SATA Controller → Add Hard Disk (+) → Create```
+LFS requires that the host kernel supports UNIX 98 pseudo terminals (PTYs).
 
-- Name: ft_linux.vdi
-- Size: 20 GB
-- Type: VDI
-- Storage: Dynamically allocated
+### Check the kernel version
 
----
+```bash
+uname -r
+```
 
-## 1 Environment
+Output:
 
-### The enunced
+```text
+6.1.0-51-amd64
+```
 
-- You must use at least 3 different partitions: `root, /boot and a swap` partition. You
-can, of course, make more partitions if you want to.
+The Linux 6.1 kernel is newer than the minimum required version (Linux 5.4).
 
----
+### Verify UNIX 98 PTY support
 
-### Disk setup
+```bash
+grep CONFIG_UNIX98_PTYS /boot/config-$(uname -r)
+```
 
-### /dev Directory
+Expected output:
 
-`/dev` (device) is a special directory in Linux where system devices are represented as files. 
-In Linux, hardware devices are accessed through special files called device files, allowing the operating system and applications to communicate with them.
+```text
+CONFIG_UNIX98_PTYS=y
+```
 
-Disks, partitions, USB devices, terminals, and other hardware components are represented inside `/dev`.
-
-For example:
-- `/dev/sda` represents a disk device.
-- `/dev/sda1` represents the first partition of that disk.
-- `/dev/sdb` can represent an additional disk added to the system.
-
-In the ft_linux project, the disk used to build our Linux system appears inside `/dev` (for example `/dev/sdb`). Its partitions are created from this device (for example `/dev/sdb1`) and will be used as the destination for the new Linux system.
-
-The system uses one additional disk (/dev/vdb) with 10GB allocated and divided into 3 partitions as required by the subject:
-
-- /dev/vdb1 → 1GB → swap
-- /dev/vdb2 → 1GB → /boot
-- /dev/vdb3 → ~18GB → root filesystem (/)
-
-This satisfies the requirement of at least 3 partitions.
+</details>
 
 ---
 
-## Partition tools
+## Disk Management
 
-`lsblk` - list block devices
+<details>
+<summary>Create Virtual Machine</summary>
 
-`fdisk` - manipulate disk partition table
+A Debian Linux virtual machine (40 GB) was used as the host environment for this project.
 
-- add partition
+An additional virtual disk was created to store the LFS system.
 
-```sudo fdisk /dev/vdb```
+**VirtualBox**
 
-Commands:
+`Settings → Storage → SATA Controller → Add Hard Disk (+) → Create`
 
-n → new partition
-p → primary
-d → delete partition
-w → write changes
-
-2 GB -> for swap, 1 GB for boot -> rest OS
-
-- to delete a partition
-
-```sudo fdisk /dev/vdb```
-
-- -p (partition)
-- -d (delete)
-- -w (write) -> save
+- Name: `ft_linux.vdi`
+- Size: `25 GB`
+- Type: `VDI`
+- Storage: `Dynamically allocated`
 
 ---
 
-- before
+## Project Requirement
+
+The project requires at least three partitions:
+
+- `/`
+- `/boot`
+- `swap`
+
+---
+
+## Disk Setup
+
+### The `/dev` directory
+
+`/dev` (device) is a special directory where Linux represents hardware devices as files.
+
+Storage devices and their partitions are accessed through this directory.
+
+Examples:
+
+- `/dev/vda` → first disk
+- `/dev/vda1` → first partition of the first disk
+- `/dev/vdb` → second disk
+- `/dev/vdb1` → first partition of the second disk
+
+For this project, the additional disk (`/dev/vdb`) is divided into three partitions:
+
+| Partition | Size | Purpose |
+|-----------|------|---------|
+| `/dev/vdb1` | 2 GB | Swap |
+| `/dev/vdb2` | 1 GB | `/boot` |
+| `/dev/vdb3` | Remaining space | Root filesystem (`/`) |
+
+This satisfies the project requirement.
+
+---
+
+## Partitioning Tools
+
+- `lsblk` — list block devices
+- `fdisk` — create and manage disk partitions
+
+---
+
+## Creating the Partitions
+
+```bash
+sudo fdisk /dev/vdb
+```
+
+Main commands used inside `fdisk`:
+
+- `n` → create a new partition
+- `p` → print the partition table
+- `d` → delete a partition
+- `w` → write changes and exit
+
+Partition layout:
+
+- 2 GB → swap
+- 1 GB → /boot
+- Remaining space → root filesystem
+
+---
+
+## Verify the Partition Layout
+
+### Before
+
 ```bash
 lsblk
-
-vda                       253:0    0    64G  0 disk 
-├─vda1                    253:1    0     1G  0 part /boot/efi
-├─vda2                    253:2    0     2G  0 part /boot
-└─vda3                    253:3    0  60.9G  0 part 
-  └─ubuntu--vg-ubuntu--lv 252:0    0  60.9G  0 lvm  /
-vdb                       253:16   0    25G  0 disk 
 ```
 
-- After
-``` bash
-vda                       253:0    0    64G  0 disk 
+```text
+vda                       253:0    0    64G  0 disk
 ├─vda1                    253:1    0     1G  0 part /boot/efi
 ├─vda2                    253:2    0     2G  0 part /boot
-└─vda3                    253:3    0  60.9G  0 part 
+└─vda3                    253:3    0  60.9G  0 part
   └─ubuntu--vg-ubuntu--lv 252:0    0  60.9G  0 lvm  /
-vdb                       253:16   0    25G  0 disk 
-├─vdb1                    253:17   0     2G  0 part 
-├─vdb2                    253:18   0     1G  0 part 
-└─vdb3                    253:19   0    22G  0 part 
+vdb                       253:16   0    25G  0 disk
 ```
-## Next step
-## Filesystem setup
+
+### After
+
+```text
+vda                       253:0    0    64G  0 disk
+├─vda1                    253:1    0     1G  0 part /boot/efi
+├─vda2                    253:2    0     2G  0 part /boot
+└─vda3                    253:3    0  60.9G  0 part
+  └─ubuntu--vg-ubuntu--lv 252:0    0  60.9G  0 lvm  /
+vdb                       253:16   0    25G  0 disk
+├─vdb1                    253:17   0     2G  0 part
+├─vdb2                    253:18   0     1G  0 part
+└─vdb3                    253:19   0    22G  0 part
+```
+
+---
+
+## Creating the Filesystems
+
+Initialize the swap partition:
+
 ```bash
 sudo mkswap /dev/vdb1
 sudo swapon /dev/vdb1
+```
 
+Create the filesystems:
+
+```bash
 sudo mkfs.ext4 /dev/vdb2
 sudo mkfs.ext4 /dev/vdb3
 ```
 
-- ## Mounting LFS system
+---
+
+## Mounting the LFS System
+
 ```bash
 export LFS=/mnt/lfs
+
 sudo mkdir -pv $LFS
 sudo mount /dev/vdb3 $LFS
 
@@ -126,57 +191,96 @@ sudo mount /dev/vdb2 $LFS/boot
 
 ---
 
-- ## LFS environment variable
+## The LFS Environment Variable
 
-$LFS defines the root directory of the Linux From Scratch system.
+`$LFS` defines the root directory of the Linux From Scratch system.
 
-It is used to avoid hardcoding paths and to clearly separate the host system from the LFS build environment.
+It avoids hardcoding paths and clearly separates the host system from the LFS build environment.
 
-/dev/vdb3 is mounted at /mnt/lfs
+In this setup:
 
-$LFS points to /mnt/lfs
+- `/dev/vdb3` is mounted at `/mnt/lfs`
+- `$LFS` points to `/mnt/lfs`
 
-- ## LFS user setup
+---
 
+## Creating the LFS User
+
+```bash
 sudo groupadd lfs
 
 sudo useradd -s /bin/bash -g lfs -m -k /dev/null lfs
 
 sudo passwd lfs
+```
 
 Switch to the build user:
 
+```bash
 su - lfs
+```
 
+Set the environment variable again:
+
+```bash
 export LFS=/mnt/lfs
-
-
-- ## Sources directory
-sudo mkdir -pv $LFS/sources
-
-sudo chmod -v a+wt $LFS/sources
-
-
+```
 
 ---
+
+## Sources Directory
+
+Create the sources directory:
+
+```bash
+sudo mkdir -pv $LFS/sources
+```
+
+Grant write permission with the sticky bit:
+
+```bash
+sudo chmod -v a+wt $LFS/sources
+```
+
 ---
 
 ## Notes
 
-How to manage space in virtual machines
+### Resizing a VirtualBox Virtual Disk
+
+List all virtual disks:
 
 ```bash
 VBoxManage list hdds
 ```
 
-Find the location of HDD to manage
+Locate the disk:
 
-```Location:       /media/"USER"/SSD/ft_linux_builder_MV2/ft_linux_builder/ft_linux_builder.vdi```
+```text
+Location: /media/<USER>/SSD/ft_linux_builder_MV2/ft_linux_builder/ft_linux_builder.vdi
+```
 
-```VBoxManage modifymedium disk "PATH" --resize *** ```
+Resize the disk:
+
+```bash
+VBoxManage modifymedium disk "PATH_TO_DISK" --resize SIZE_IN_MB
+```
 
 Example:
 
-``` VBoxManage modifymedium disk "/media/"USER"/SSD/ft_linux_builder_MV2/ft_linux_builder/ft_linux_builder.vdi" --resize 40960```
+```bash
+VBoxManage modifymedium disk "/media/<USER>/SSD/ft_linux_builder_MV2/ft_linux_builder/ft_linux_builder.vdi" --resize 40960
+```
 
+</details>
 
+---
+
+## Packages
+
+<details>
+<summary>Packages to Install</summary>
+
+_Work in progress..._
+
+</details>
