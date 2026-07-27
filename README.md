@@ -349,7 +349,7 @@ During the Linux From Scratch (LFS) build process, all required source packages 
 $LFS/sources
 ```
 
-## Packages an patches
+## Packages and patches
 
 ```bash
 • Acl
@@ -421,5 +421,16 @@ $LFS/sources
 • Xz Utils
 • Zlib
 ```
+
+**Differences**
+
+*Linux is constantly evolving. Every few months, new releases introduce changes, such as updated packages, renamed components, or different system organization. Therefore, some packages mentioned in older documentation may have different names or implementations in newer versions.*
+
+*For example, older LFS versions used Eudev, while newer LFS versions use udev-lfs, which provides the required device management functionality in a different way.*
+
+|  42 ft_linux   |   LFS 12.3   |
+|________________|______________|
+| Eudev	| udev-lfs|
+| Sysvinit | SysV init |
 
 </details>
