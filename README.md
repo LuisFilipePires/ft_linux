@@ -244,6 +244,46 @@ sudo chmod -v a+wt $LFS/sources
 
 ---
 
+## Making the LFS Variable Persistent for Root
+
+The LFS book requires the `LFS` environment variable to be available when working as `root`.
+
+Verify whether it is already defined:
+
+```bash
+sudo -i
+echo $LFS
+```
+
+If no value is displayed, add it to the root user's shell configuration:
+
+```bash
+echo 'export LFS=/mnt/lfs' >> ~/.bash_profile
+source ~/.bash_profile
+```
+
+Verify the result:
+
+```bash
+echo $LFS
+```
+
+Expected output:
+
+```text
+/mnt/lfs
+```
+
+Exit the root shell:
+
+```bash
+exit
+```
+
+---
+
+---
+
 ## Notes
 
 ### Resizing a VirtualBox Virtual Disk
