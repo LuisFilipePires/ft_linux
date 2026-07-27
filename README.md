@@ -351,6 +351,7 @@ $LFS/sources
 
 ## Packages an patches
 
+```bash
 • Acl
 • Attr
 • Autoconf
@@ -419,5 +420,6 @@ $LFS/sources
 • XML::Parser
 • Xz Utils
 • Zlib
+```
 
 </details>
