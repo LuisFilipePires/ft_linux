@@ -347,6 +347,7 @@ During the Linux From Scratch (LFS) build process, all required source packages 
 
 ```bash
 $LFS/sources
+```
 
 ## Packages an patches
 
