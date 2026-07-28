@@ -442,7 +442,9 @@ The file content was verified using the MD5 checksum provided by LFS 12.3.
 </details>
 
 <details>
+
 <summary>Configuring the `lfs` User Environment</summary>
+
 ## Configuring the `lfs` User Environment
 
 After creating the `lfs` user, all temporary system packages are built using this unprivileged account instead of `root`.
