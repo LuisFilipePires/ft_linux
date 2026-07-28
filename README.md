@@ -440,3 +440,123 @@ The file content was verified using the MD5 checksum provided by LFS 12.3.
 ```
 
 </details>
+
+<details>
+<summary>Configuring the `lfs` User Environment</summary>
+## Configuring the `lfs` User Environment
+
+After creating the `lfs` user, all temporary system packages are built using this unprivileged account instead of `root`.
+
+### Switch to the `lfs` User
+
+```bash
+su - lfs
+```
+
+Verify the current user:
+
+```bash
+whoami
+```
+
+Expected output:
+
+```text
+lfs
+```
+
+---
+
+## Configure the Bash Environment
+
+A new `~/.bash_profile` was created to start a clean shell environment.
+
+```bash
+cat > ~/.bash_profile << "EOF"
+exec env -i HOME=$HOME TERM=$TERM PS1='\u:\w\$ ' /bin/bash
+EOF
+```
+
+This command removes almost all inherited environment variables from the host system (Debian), preventing them from interfering with the Linux From Scratch build.
+
+After creating the file, it was loaded manually:
+
+```bash
+source ~/.bash_profile
+```
+
+---
+
+A new `~/.bashrc` file was also created:
+
+```bash
+cat > ~/.bashrc << "EOF"
+set +h
+umask 022
+LFS=/mnt/lfs
+LC_ALL=POSIX
+LFS_TGT=$(uname -m)-lfs-linux-gnu
+PATH=/usr/bin
+if [ ! -L /bin ]; then PATH=/bin:$PATH; fi
+PATH=$LFS/tools/bin:$PATH
+CONFIG_SITE=$LFS/usr/share/config.site
+export LFS LC_ALL LFS_TGT PATH CONFIG_SITE
+EOF
+```
+
+This file defines the environment variables required to build the temporary LFS system.
+
+---
+
+## Disable `/etc/bash.bashrc`
+
+Debian automatically loads the global Bash configuration file:
+
+```text
+/etc/bash.bashrc
+```
+
+This file may modify the build environment by adding aliases, changing the `PATH`, or exporting additional environment variables.
+
+To ensure a clean and reproducible build environment, the LFS book recommends temporarily renaming this file.
+
+As `root`:
+
+```bash
+[ ! -e /etc/bash.bashrc ] || mv -v /etc/bash.bashrc /etc/bash.bashrc.NOUSE
+```
+
+Output:
+
+```text
+renamed '/etc/bash.bashrc' -> '/etc/bash.bashrc.NOUSE'
+```
+
+> **Note:** This file can be safely restored after completing the LFS build.
+
+---
+
+## Configure Parallel Compilation
+
+Check the number of available logical processors:
+
+```bash
+nproc
+```
+
+Output:
+
+```text
+3
+```
+
+Enable parallel compilation by setting the `MAKEFLAGS` environment variable:
+
+```bash
+export MAKEFLAGS=-j3
+```
+
+This allows `make` to execute up to three compilation jobs simultaneously, reducing the overall build time.
+
+> **Important:** Never use `make -j` without specifying a number. Doing so allows `make` to create an unlimited number of jobs, which can lead to system instability.
+</details>
