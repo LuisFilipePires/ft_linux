@@ -562,3 +562,25 @@ This allows `make` to execute up to three compilation jobs simultaneously, reduc
 
 > **Important:** Never use `make -j` without specifying a number. Doing so allows `make` to create an unlimited number of jobs, which can lead to system instability.
 </details>
+
+<details>
+
+<summary>Install Packages</summary>
+
+### Binutils 2.44 (Pass 1)
+
+The first package of the temporary toolchain was successfully built and installed.
+
+Compilation time:
+- `make`: approximately **7 minutes**
+- `make install`: **7.3 seconds**
+
+The package was installed under:
+
+```text
+/mnt/lfs/tools
+```
+
+This provides the cross-binutils tools (`ld`, `as`, `ar`, `objdump`, etc.) that will be used to build the rest of the temporary LFS toolchain.
+
+</details>
