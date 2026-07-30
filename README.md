@@ -1,10 +1,130 @@
 # ft_linux
 
-Linux From Scratch
+
+## Linux From Scratch
+
+Official documentation:
+
+[Linux From Scratch 12.3 Book](https://www.linuxfromscratch.org/lfs/view/12.3/)
 
 ---
 
+# Re-enter the LFS Chroot Environment
+
+After rebooting the host system, follow these steps to enter the LFS **chroot** environment and continue building Linux From Scratch.
+
+## 1. Become the root user
+
+```bash
+su -
+```
+
+Verify that you are root and that the `LFS` environment variable is set:
+
+```bash
+whoami
+echo $LFS
+```
+
+Expected output:
+
+```text
+root
+/mnt/lfs
+```
+
+---
+
+## 2. Verify that the LFS partition is mounted
+
+```bash
+findmnt $LFS
+```
+
+Expected output:
+
+```text
+/mnt/lfs   /dev/sdb2
+```
+
+If it is not mounted:
+
+```bash
+mount /dev/sdb2 $LFS
+```
+
+---
+
+## 3. Create the required mount points
+
+Run this command even if the directories already exist:
+
+```bash
+mkdir -pv $LFS/{dev,proc,sys,run}
+```
+
+---
+
+## 4. Mount the virtual kernel filesystems
+
+```bash
+mount --bind /dev $LFS/dev
+
+mount -vt devpts devpts -o gid=5,mode=0620 $LFS/dev/pts
+
+mount -vt proc proc $LFS/proc
+
+mount -vt sysfs sysfs $LFS/sys
+
+mount -vt tmpfs tmpfs $LFS/run
+```
+
+Mount `/dev/shm`:
+
+```bash
+if [ -h $LFS/dev/shm ]; then
+    install -v -d -m 1777 $LFS$(realpath /dev/shm)
+else
+    mount -vt tmpfs -o nosuid,nodev tmpfs $LFS/dev/shm
+fi
+```
+
+---
+
+## 5. Enter the chroot environment
+
+```bash
+chroot "$LFS" /usr/bin/env -i \
+    HOME=/root \
+    TERM="$TERM" \
+    PS1='(lfs chroot) \u:\w\$ ' \
+    PATH=/usr/bin:/usr/sbin \
+    MAKEFLAGS="-j$(nproc)" \
+    TESTSUITEFLAGS="-j$(nproc)" \
+    /bin/bash --login
+```
+
+---
+
+## 6. Verify the chroot environment
+
+```bash
+whoami
+pwd
+```
+
+Expected output:
+
+```text
+root
+/
+```
+
+If the output matches the above, the chroot environment is ready and you can continue with the next LFS package.
+
+
 <details>
+
 <summary>Requirements</summary>
 
 ## Host System Kernel
@@ -583,4 +703,34 @@ The package was installed under:
 
 This provides the cross-binutils tools (`ld`, `as`, `ar`, `objdump`, etc.) that will be used to build the rest of the temporary LFS toolchain.
 
+---
+
+## Glibc 2.41
+
+The GNU C Library (glibc) was successfully built and installed into the temporary LFS system.
+
+### Sanity check
+
+The toolchain was verified with:
+
+```bash
+echo 'int main(){}' | $LFS_TGT-gcc -xc -
+readelf -l a.out | grep ld-linux
+
+
+---
+
+- ✅ Preparação do disco e montagem de `$LFS`
+- ✅ Estrutura de diretórios
+- ✅ Utilizador `lfs` e ambiente de compilação
+- ✅ Binutils Pass 1
+- ✅ GCC Pass 1
+- ✅ Linux API Headers
+- ✅ Glibc + sanity check
+
+---
+
+
 </details>
+
+
