@@ -5,11 +5,12 @@
 
 Official documentation:
 
+```
 Notations:
 virtualbox VM: ft_linux
 login: luis-fif_build
 pass: 1234
-
+```
 [Linux From Scratch 12.3 Book](https://www.linuxfromscratch.org/lfs/view/12.3/)
 
 ---
