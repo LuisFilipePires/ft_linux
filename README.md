@@ -837,3 +837,30 @@ The archive was downloaded to:
 ```/usr/src/wget-1.25.0.tar.gz```
 
 </details>
+
+<details>
+    <summary>Why `enp0s3` Is Used</summary>
+    
+## Why `enp0s3` Is Used
+
+`enp0s3` is the name assigned by Linux to the virtual Ethernet interface provided by VirtualBox.
+
+Linux uses predictable network interface names instead of always using names such as `eth0`. The name `enp0s3` is based on the virtual hardware topology:
+
+* `en` → Ethernet
+* `p0` → PCI bus 0
+* `s3` → PCI slot 3
+
+This naming helps Linux identify the interface based on its hardware location.
+
+Interface names are important because they are not guaranteed to be the same on every machine. When physical or virtual hardware is added, removed, or its position changes, Linux may assign a different interface name. For example, another Ethernet device could appear as `enp0s8`.
+
+In our virtual machine, the network adapter is currently identified as `enp0s3`, so the LFS network configuration uses this exact interface:
+
+```text
+IFACE=enp0s3
+```
+
+This configuration is therefore tied to the current virtual hardware configuration of the VM.
+
+</details>
