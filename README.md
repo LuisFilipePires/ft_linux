@@ -737,8 +737,18 @@ readelf -l a.out | grep ld-linux
 - ✅ Glibc + sanity check
 
 ---
-
+```
 
 </details>
 
+<details>
+    <summary>Network setup</summary>
 
+    Follow these steps, in this order:
+
+1. ip link set enp0s3 up
+2. ip addr add 10.0.2.15/24 dev enp0s3
+3. ip route add default via 10.0.2.2
+4. echo "nameserver 8.8.8.8" > /etc/resolv.conf
+5. ping -c 3 8.8.8.8, then curl -I https://www.google.com (or wget -q --spider google.com)
+</details>
