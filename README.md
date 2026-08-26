@@ -745,11 +745,94 @@ readelf -l a.out | grep ld-linux
 <details>
     <summary>Network setup</summary>
 
+    Network Configuration
     Follow these steps, in this order:
+    at the LFS machine $root
 
-1. ip link set enp0s3 up
-2. ip addr add 10.0.2.15/24 dev enp0s3
-3. ip route add default via 10.0.2.2
-4. echo "nameserver 8.8.8.8" > /etc/resolv.conf
-5. ping -c 3 8.8.8.8, then curl -I https://www.google.com (or wget -q --spider google.com)
+The network interface used by the virtual machine is enp0s3.
+
+Initial manual configuration
+
+The first configuration was done manually to test network connectivity:
+
+ip link set enp0s3 up
+ip addr add 10.0.2.15/24 dev enp0s3
+ip route add default via 10.0.2.2
+echo "nameserver 8.8.8.8" > /etc/resolv.conf
+
+Connectivity was tested with:
+
+ping -c 3 8.8.8.8
+
+This configuration was temporary and was lost after restarting the system.
+
+
+## Permanent LFS network configuration
+
+The LFS SysVinit network script expects an IFACE variable. The following configuration was created in /etc/sysconfig/ifconfig.enp0s3:
+
+```
+IFACE=enp0s3
+SERVICE=ipv4-static
+IP=10.0.2.15
+PREFIX=24
+GATEWAY=10.0.2.2
+```
+
+The network service was then restarted:
+
+/etc/rc.d/init.d/network restart
+
+The interface and routing were verified with:
+```
+ip addr show enp0s3
+ip route
+```
+
+DNS was configured through /etc/resolv.conf:
+
+```nameserver 8.8.8.8```
+Downloading Wget Using Anonymous FTP
+
+HTTPS download using Python initially failed because the LFS system did not have the required CA certificates configured:
+
+```
+ssl.SSLCertVerificationError:
+CERTIFICATE_VERIFY_FAILED
+unable to get local issuer certificate
+```
+
+The ftp client was therefore used to download the Wget source.
+```
+cd /usr/src
+ftp ftp.gnu.org
+```
+The GNU FTP server requires anonymous authentication:
+```
+Name: anonymous
+Password: anonymous
+```
+The Wget source directory was selected:
+```
+cd gnu/wget
+binary
+```
+The first download attempt produced an Illegal PORT command error because the FTP client was using active mode. Passive mode was enabled:
+
+passive
+
+The source archive was then downloaded successfully:
+
+```get wget-1.25.0.tar.gz```
+
+The FTP client reported:
+
+Transfer complete
+
+The archive was downloaded to:
+
+```/usr/src/wget-1.25.0.tar.gz```
+
+
+
 </details>
