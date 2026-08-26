@@ -745,13 +745,14 @@ readelf -l a.out | grep ld-linux
 <details>
     <summary>Network setup</summary>
 
-    Network Configuration
-    Follow these steps, in this order:
-    at the LFS machine $root
+Network Configuration
 
-The network interface used by the virtual machine is enp0s3.
+At the ```LFS machine $root```
 
-Initial manual configuration
+The network interface used by the virtual machine is ```enp0s3```.
+
+---
+### Initial manual configuration only for testing, skip this manual configuration
 
 The first configuration was done manually to test network connectivity:
 
@@ -767,6 +768,7 @@ Connectivity was tested with:
 This configuration was temporary and was lost after restarting the system.
 
 ## Permanent LFS network configuration
+---
 
 The LFS SysVinit network script expects an IFACE variable. The following configuration was created in /etc/sysconfig/ifconfig.enp0s3:
 
