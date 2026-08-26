@@ -762,10 +762,9 @@ echo "nameserver 8.8.8.8" > /etc/resolv.conf
 
 Connectivity was tested with:
 
-ping -c 3 8.8.8.8
+```ping -c 3 8.8.8.8```
 
 This configuration was temporary and was lost after restarting the system.
-
 
 ## Permanent LFS network configuration
 
@@ -781,7 +780,7 @@ GATEWAY=10.0.2.2
 
 The network service was then restarted:
 
-/etc/rc.d/init.d/network restart
+```/etc/rc.d/init.d/network restart```
 
 The interface and routing were verified with:
 ```
@@ -802,6 +801,8 @@ CERTIFICATE_VERIFY_FAILED
 unable to get local issuer certificate
 ```
 
+## download by FTP 
+
 The ftp client was therefore used to download the Wget source.
 ```
 cd /usr/src
@@ -819,7 +820,7 @@ binary
 ```
 The first download attempt produced an Illegal PORT command error because the FTP client was using active mode. Passive mode was enabled:
 
-passive
+```passive```
 
 The source archive was then downloaded successfully:
 
@@ -832,7 +833,5 @@ Transfer complete
 The archive was downloaded to:
 
 ```/usr/src/wget-1.25.0.tar.gz```
-
-
 
 </details>
