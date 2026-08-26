@@ -12,6 +12,7 @@ login: luis-fif_build
 pass: 1234
 
 There a script to enter at a chroot environment
+/home/luis-f/enter-lfs.sh
 ```
 [Linux From Scratch 12.3 Book](https://www.linuxfromscratch.org/lfs/view/12.3/)
 
