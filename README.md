@@ -747,28 +747,13 @@ readelf -l a.out | grep ld-linux
 
 Network Configuration
 
+needed for install ```wget``` and ```curl```
+
 At the ```LFS machine $root```
 
 The network interface used by the virtual machine is ```enp0s3```.
 
----
-### Initial manual configuration only for testing, skip this manual configuration
-
-The first configuration was done manually to test network connectivity:
-
-ip link set enp0s3 up
-ip addr add 10.0.2.15/24 dev enp0s3
-ip route add default via 10.0.2.2
-echo "nameserver 8.8.8.8" > /etc/resolv.conf
-
-Connectivity was tested with:
-
-```ping -c 3 8.8.8.8```
-
-This configuration was temporary and was lost after restarting the system.
-
 ## Permanent LFS network configuration
----
 
 The LFS SysVinit network script expects an IFACE variable. The following configuration was created in /etc/sysconfig/ifconfig.enp0s3:
 
@@ -863,4 +848,17 @@ IFACE=enp0s3
 
 This configuration is therefore tied to the current virtual hardware configuration of the VM.
 
+</details>
+
+<details>
+    <summary>Last packages</summary>
+
+```
+GCC    14.2.0
+glibc  2.41
+kernel 6.13.4-luis-fif
+Nettle 3.10.2
+Hogweed 3.10.2
+zlib   1.3.1
+```
 </details>
