@@ -3,7 +3,17 @@
 
 ## Linux From Scratch
 
+<details>
+    <summary>Preparation</summary>
 Official documentation:
+
+```html
+https://refspecs.linuxfoundation.org/FHS_3.0/fhs/index.html
+https://www.linuxfromscratch.org/lfs/view/stable/index.html
+https://www.gnu.org/software/automake/manual/html_node/index.html#SEC_Contents
+https://pubs.opengroup.org/onlinepubs/9699919799/
+https://refspecs.linuxfoundation.org/lsb.shtml
+```
 
 ```
 Notations:
@@ -165,6 +175,7 @@ Expected output:
 ```text
 CONFIG_UNIX98_PTYS=y
 ```
+</details>
 
 </details>
 
