@@ -3,6 +3,8 @@
 
 ## Linux From Scratch
 
+I used LFS as the foundation of my userspace, then adapted it to the requirements of ft_linux.
+
 <details>
     <summary>Preparation</summary>
 Official documentation:
