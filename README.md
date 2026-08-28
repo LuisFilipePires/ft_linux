@@ -1053,6 +1053,19 @@ Reattach to the session:
 screen -r
 ```
 
+Close screen
+
+in each windows
+```exit``` 
+or 
+
+close all windows
+```
+Ctrl+A
+:quit
+Enter
+```
+
 </details>
 
 
