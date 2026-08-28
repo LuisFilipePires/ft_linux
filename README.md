@@ -878,7 +878,7 @@ zlib   1.3.1
 
 <details> <summary>Shared Folder</summary>
 
-# The VirtualBox shared folder support was enabled in the custom LFS kernel.
+### The VirtualBox shared folder support was enabled in the custom LFS kernel.
 
 ## Kernel configuration
 ```
