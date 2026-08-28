@@ -888,6 +888,8 @@ cd /usr/src/kernel-6.13.4
 make menuconfig
 ```
 
+![Shared Folder](images/menuconfig.png)
+
 The required options were found using the `Search` function (`/`) in `menuconfig`:
 
 ```text
