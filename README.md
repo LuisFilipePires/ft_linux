@@ -878,19 +878,28 @@ zlib   1.3.1
 
 <details> <summary>Shared Folder</summary>
 
-The VirtualBox shared folder support was enabled in the custom LFS kernel.
+# The VirtualBox shared folder support was enabled in the custom LFS kernel.
 
-### Kernel configuration
+## Kernel configuration
 ```
 cd /usr/src/kernel-6.13.4
 make menuconfig
 ```
 ### The following options were enabled as modules:
 
+The required kernel options were located using the Search function (/) in menuconfig:
 ```
-CONFIG_VBOXGUEST=m
-CONFIG_VBOXSF_FS=m
-Build and install the modules
+VBOXGUEST
+VBOXSF_FS
+```
+Select options
+```
+-> CONFIG_VBOXGUEST=m
+-> CONFIG_VBOXSF_FS=m
+```
+### Build and install the modules
+
+```
 make modules
 make modules_install
 depmod -a
@@ -910,7 +919,7 @@ modprobe vboxguest
 modprobe vboxsf
 ```
 
-Verify:
+### Verify:
 
 ```lsmod | grep vbox```
 
@@ -920,7 +929,8 @@ vboxsf
 vboxguest
 Mount the shared folder
 ```
-Create the mount point:
+
+### Create the mount point:
 
 ```mkdir -p /mnt/shared```
 
@@ -928,7 +938,7 @@ Mount the VirtualBox shared folder:
 
 ```mount -t vboxsf <shared_folder_name> /mnt/shared```
 
-The shared folder is then accessible at:
+### The shared folder is then accessible at:
 
 ```/mnt/shared/```
 
