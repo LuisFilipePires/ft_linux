@@ -874,6 +874,8 @@ Nettle 3.10.2
 Hogweed 3.10.2
 zlib   1.3.1
 ```
+</details>
+
 <details>
     <summary>Shared Folder</summary>
 
