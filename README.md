@@ -874,79 +874,93 @@ Nettle 3.10.2
 Hogweed 3.10.2
 zlib   1.3.1
 ```
-</details>
+<details>
+    <summary>Shared Folder</summary>
 
-<details> <summary>Shared Folder</summary>
+VirtualBox Shared Folder support was enabled in the custom LFS kernel.
 
-### The VirtualBox shared folder support was enabled in the custom LFS kernel.
+### Kernel configuration
 
-## Kernel configuration
-```
+```bash
 cd /usr/src/kernel-6.13.4
 make menuconfig
 ```
-### The following options were enabled as modules:
 
-The required kernel options were located using the Search function (/) in menuconfig:
-```
+The required options were found using the `Search` function (`/`) in `menuconfig`:
+
+```text
 VBOXGUEST
 VBOXSF_FS
 ```
-Select options
+
+Both were configured as modules:
+
+```text
+CONFIG_VBOXGUEST=m
+CONFIG_VBOXSF_FS=m
 ```
--> CONFIG_VBOXGUEST=m
--> CONFIG_VBOXSF_FS=m
-```
+
 ### Build and install the modules
 
-```
+```bash
 make modules
 make modules_install
 depmod -a
 ```
 
-### The resulting modules are:
+Load the modules:
 
-```
-/lib/modules/6.13.4-luis-fif/kernel/drivers/virt/vboxguest/vboxguest.ko
-/lib/modules/6.13.4-luis-fif/kernel/fs/vboxsf/vboxsf.ko
-```
-
-### Load the VirtualBox modules:
-
-```
+```bash
 modprobe vboxguest
 modprobe vboxsf
 ```
 
-### Verify:
+Verify:
 
-```lsmod | grep vbox```
-
-Expected:
-```
-vboxsf
-vboxguest
-Mount the shared folder
+```bash
+lsmod | grep vbox
 ```
 
-### Create the mount point:
+### Mount point
 
-```mkdir -p /mnt/shared```
+Create the mount point:
 
-Mount the VirtualBox shared folder:
-
-```mount -t vboxsf <shared_folder_name> /mnt/shared```
-
-### The shared folder is then accessible at:
-
-```/mnt/shared/```
-
-For example, the evaluation scripts can be accessed as:
-
+```bash
+mkdir -p /mnt/shared
 ```
-/mnt/shared/ft_linux_basic.sh
-/mnt/shared/ft_linux_others.sh
+
+The VirtualBox shared folder is mounted at:
+
+```text
+/mnt/shared
 ```
+
+### Automatic mount at boot
+
+The shared folder was added to `/etc/fstab` so that it is mounted automatically during boot.
+
+edit in: vim ```/etc/fstab```
+
+```text
+<virtualbox_folder_name>  /mnt/shared  vboxsf  defaults  0  0
+```
+
+Replace `<virtualbox_folder_name>` with the **Folder Name configured in VirtualBox**.
+
+Test the configuration without rebooting:
+
+```bash
+mount -a
+```
+
+Verify:
+
+```bash
+mount | grep vboxsf
+ls -la /mnt/shared
+```
+
+The shared folder is then available automatically after reboot.
 
 </details>
+
