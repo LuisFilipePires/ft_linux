@@ -874,4 +874,58 @@ Nettle 3.10.2
 Hogweed 3.10.2
 zlib   1.3.1
 ```
+<details> <summary>Shared Folder</summary>
+
+The VirtualBox shared folder support was enabled in the custom LFS kernel.
+
+Kernel configuration
+cd /usr/src/kernel-6.13.4
+make menuconfig
+
+The following options were enabled as modules:
+
+CONFIG_VBOXGUEST=m
+CONFIG_VBOXSF_FS=m
+Build and install the modules
+make modules
+make modules_install
+depmod -a
+
+The resulting modules are:
+
+/lib/modules/6.13.4-luis-fif/kernel/drivers/virt/vboxguest/vboxguest.ko
+/lib/modules/6.13.4-luis-fif/kernel/fs/vboxsf/vboxsf.ko
+
+Load the VirtualBox modules:
+
+modprobe vboxguest
+modprobe vboxsf
+
+Verify:
+
+lsmod | grep vbox
+
+Expected:
+
+vboxsf
+vboxguest
+Mount the shared folder
+
+Create the mount point:
+
+mkdir -p /mnt/shared
+
+Mount the VirtualBox shared folder:
+
+mount -t vboxsf <shared_folder_name> /mnt/shared
+
+The shared folder is then accessible at:
+
+/mnt/shared/
+
+For example, the evaluation scripts can be accessed as:
+
+/mnt/shared/ft_linux_basic.sh
+/mnt/shared/ft_linux_others.sh
+
 </details>
