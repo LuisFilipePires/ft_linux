@@ -966,3 +966,91 @@ The shared folder is then available automatically after reboot.
 
 </details>
 
+<details>
+    <summary>GNU Screen 4.5.1</summary>
+
+### Installation
+
+GNU Screen 4.5.1 was downloaded from the GNU mirror:
+
+```bash
+wget https://mirrors.kernel.org/gnu/screen/screen-4.5.1.tar.gz
+```
+
+Extract the archive:
+
+```bash
+tar -xf screen-4.5.1.tar.gz
+cd screen-4.5.1
+```
+
+Because Screen 4.5.1 is an old version and the LFS system uses a modern GCC compiler, compatibility flags were temporarily added to `CFLAGS`:
+
+```bash
+export CFLAGS="-g -O2 -Wno-implicit-int -Wno-implicit-function-declaration"
+```
+
+The environment variable is only valid for the current shell session and was not added permanently to the system.
+
+Configure and compile:
+
+```bash
+./configure
+make
+```
+
+Install:
+
+```bash
+make install
+```
+
+The installation generated an error while building the `screen.info` documentation because of obsolete Texinfo commands. The Screen executable itself was successfully installed.
+
+Verify the installation:
+
+```bash
+screen --version
+```
+
+Output:
+
+```text
+Screen version 4.05.01 (GNU) 25-Feb-17
+```
+
+### Basic usage
+
+Start a Screen session:
+
+```bash
+screen
+```
+
+Create a new virtual terminal:
+
+```text
+Ctrl+A → C
+```
+
+Move to the next window:
+
+```text
+Ctrl+A → N
+```
+
+Detach from the session while keeping processes running:
+
+```text
+Ctrl+A → D
+```
+
+Reattach to the session:
+
+```bash
+screen -r
+```
+
+</details>
+
+
