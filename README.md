@@ -988,6 +988,8 @@ cd screen-4.5.1
 
 Because Screen 4.5.1 is an old version and the LFS system uses a modern GCC compiler, compatibility flags were temporarily added to `CFLAGS`:
 
+If use a script to install ``` source script_flags.sh```
+
 ```bash
 export CFLAGS="-g -O2 -Wno-implicit-int -Wno-implicit-function-declaration"
 ```
