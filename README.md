@@ -14,6 +14,119 @@ Bonus: startx
 ```
 
 <details>
+    
+<summary>Bonus</summary>
+
+### Background Execution with `&`
+
+The `&` operator runs a command in the background, allowing the terminal to remain available for other commands.
+
+```bash
+xclock &
+```
+
+Without `&`, the terminal remains occupied by the running program until it is closed.
+
+```bash
+xclock
+```
+
+This is useful for graphical applications that should remain open while continuing to use the same terminal.
+
+---
+
+## Xorg Applications — Usage Examples
+
+The Xorg Applications provide a collection of utilities for interacting with, configuring, testing, and inspecting the X11 graphical environment.
+
+| Application   | Example                            | Purpose                                                                              |
+| ------------- | ---------------------------------- | ------------------------------------------------------------------------------------ |
+| `iceauth`     | `iceauth &`                          | Manage ICE authentication information.                                               |
+| `mkfontscale` | `mkfontscale /usr/share/fonts/...` | Generate font index files for scalable fonts.                                        |
+| `sessreg`     | `sessreg -a $USER`                 | Manage user session entries for X sessions.                                          |
+| `setxkbmap`   | `setxkbmap us`                     | Change the keyboard layout for the current X session.                                |
+| `smproxy`     | `smproxy`                          | Provide session-management support for applications that do not support it natively. |
+| `xauth`       | `xauth list`                       | Manage X11 authentication credentials.                                               |
+| `xcmsdb`      | `xcmsdb -query`                    | Query or configure X Color Management System data.                                   |
+| `xcursorgen`  | `xcursorgen cursor.config cursor`  | Create an X cursor from cursor images.                                               |
+| `xdpyinfo`    | `xdpyinfo`                         | Display detailed information about the X server.                                     |
+| `xdriinfo`    | `xdriinfo`                         | Query direct-rendering information.                                                  |
+| `xev`         | `xev`                              | Display X11 keyboard, mouse, and other input events.                                 |
+| `xgamma`      | `xgamma -gamma 1.0`                | Query or modify the display gamma correction.                                        |
+| `xhost`       | `xhost`                            | Display or modify X server access control.                                           |
+| `xinput`      | `xinput list`                      | List and configure X input devices.                                                  |
+| `xkbcomp`     | `xkbcomp`                          | Compile X Keyboard Extension (XKB) descriptions.                                     |
+| `xkbevd`      | `xkbevd`                           | Listen for XKB events and execute configured commands.                               |
+| `xkbutils`    | `xkbwatch`                         | Monitor XKB keyboard state.                                                          |
+| `xkill`       | `xkill`                            | Terminate an X application by clicking on its window.                                |
+| `xlsatoms`    | `xlsatoms`                         | List the atoms known to the X server.                                                |
+| `xlsclients`  | `xlsclients`                       | List applications connected to the X server.                                         |
+| `xmessage`    | `xmessage "Hello from LFS!"`       | Display a graphical message dialog.                                                  |
+| `xmodmap`     | `xmodmap -pke`                     | Display or modify the X keyboard mapping.                                            |
+| `xpr`         | `xpr -device ps`                   | Convert X Window Dump images for printing.                                           |
+| `xprop`       | `xprop`                            | Display and modify X window properties.                                              |
+| `xrandr`      | `xrandr`                           | Query and configure screen resolutions and display outputs.                          |
+| `xrdb`        | `xrdb -query`                      | Query or manage X server resource databases.                                         |
+| `xrefresh`    | `xrefresh`                         | Refresh the contents of the X display.                                               |
+| `xset`        | `xset q`                           | Query or modify various X server settings.                                           |
+| `xsetroot`    | `xsetroot -solid gray`             | Set properties of the root window, such as its background.                           |
+| `xvinfo`      | `xvinfo`                           | Display information about X Video extension support.                                 |
+| `xwd`         | `xwd -root -out screen.xwd`        | Capture an X window or the entire screen.                                            |
+| `xwininfo`    | `xwininfo`                         | Display information about an X window selected with the mouse.                       |
+| `xwud`        | `xwud -in screen.xwd`              | Display an X Window Dump image.                                                      |
+
+### Practical X11 Demonstration
+
+Some of these applications can be used directly to demonstrate the graphical environment:
+
+```bash
+xclock &
+xterm &
+xmessage "Hello from my LFS X11 system!" &
+xev &
+```
+
+Information about the running X server can be inspected with:
+
+```bash
+xdpyinfo
+xrandr
+xinput list
+xlsclients
+```
+
+Information about individual windows can be inspected interactively:
+
+```bash
+xwininfo
+xprop
+```
+
+The X11 environment can also be tested by changing the root window background:
+
+```bash
+xsetroot -solid gray
+```
+
+A screenshot of the X display can be captured with:
+
+```bash
+xwd -root -out screen.xwd
+```
+
+and displayed again with:
+
+```bash
+xwud -in screen.xwd
+```
+
+These applications provide a lightweight way to demonstrate and inspect the Xorg graphical environment without installing a complete desktop environment such as GNOME or KDE.
+
+</details>
+
+---
+
+<details>
     <summary>Preparation</summary>
 Official documentation:
 
