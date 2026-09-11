@@ -5,6 +5,14 @@
 
 I used LFS as the foundation of my userspace, then adapted it to the requirements of ft_linux.
 
+Notations:
+
+```
+login: root
+pass: 1234
+Bonus: startx
+```
+
 <details>
     <summary>Preparation</summary>
 Official documentation:
@@ -16,18 +24,17 @@ https://www.gnu.org/software/automake/manual/html_node/index.html#SEC_Contents
 https://pubs.opengroup.org/onlinepubs/9699919799/
 https://refspecs.linuxfoundation.org/lsb.shtml
 ```
+[Linux From Scratch 12.3 Book](https://www.linuxfromscratch.org/lfs/view/12.3/)
+
+There is a script to enter at a chroot environment
+
+/home/luis-f/enter-lfs.sh
 
 ```
-Notations:
 virtualbox VM: ft_linux
 login: luis-fif_build
 pass: 1234
-
-There a script to enter at a chroot environment
-/home/luis-f/enter-lfs.sh
 ```
-[Linux From Scratch 12.3 Book](https://www.linuxfromscratch.org/lfs/view/12.3/)
-
 ---
 
 # Re-enter the LFS Chroot Environment
@@ -180,10 +187,6 @@ CONFIG_UNIX98_PTYS=y
 </details>
 
 </details>
-
----
-
-## Disk Management
 
 <details>
 <summary>Create Virtual Machine</summary>
