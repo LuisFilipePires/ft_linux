@@ -13,6 +13,17 @@ pass: 1234
 Bonus: startx
 ```
 
+### Verify the Disk Image
+
+The `shasum` command can be used to calculate a checksum of the disk image. This checksum can be compared with a trusted checksum to verify that the file has not been modified or corrupted.
+
+```bash
+shasum < disk.vdi
+```
+
+If the calculated checksum matches the expected value, the disk image is considered unchanged.
+
+
 <details>
     
 <summary>Bonus</summary>
